@@ -11,7 +11,7 @@ exports.all = function (req, res) {
 exports.get = function (req, res) {
     req.getConnection(function(err, connection){
         connection.query("select * from issues where id = ?", req.params.id, function(err, results){
-            console.log(results);
+            
             return res.render('issue_edit', {issue : results[0]})
         });
     });
@@ -33,7 +33,7 @@ exports.update = function (req, res) {
 }
 
 exports.showAdd = function (req, res) {
-    res.render('isue')
+    res.render('issue')
 }
 
 exports.add = function (req, res) {
@@ -53,8 +53,9 @@ exports.add = function (req, res) {
 
 exports.delete = function (req, res, next) {
     req.getConnection(function(err, connection){
-        connection.query("delete from isues where id = ?", req.params.id, function(err, results){
-            //if (err) return next(err);
+
+        connection.query("delete from issues where id = ?", req.params.id, function(err, results){
+            if (err) return next(err);
             res.redirect('/issues')
         });
     });
